@@ -23,7 +23,7 @@ function SellerDashboardContent() {
   useEffect(() => {
     Promise.all([
       api.get("/products/seller/mine").then((r) => r.data?.data || r.data?.products || r.data || []).catch(() => []),
-      api.get("/orders/mine").then((r) => r.data?.data || r.data?.orders || r.data || []).catch(() => []),
+      api.get("/orders/seller/mine").then((r) => r.data?.data || r.data?.orders || r.data || []).catch(() => []),
     ]).then(([products, orders]) => {
       const productsArr = Array.isArray(products) ? products : products?.products || [];
       const ordersArr = Array.isArray(orders) ? orders : orders?.orders || [];

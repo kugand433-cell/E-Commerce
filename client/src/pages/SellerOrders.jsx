@@ -26,7 +26,7 @@ function SellerOrdersContent() {
 
   const load = () => {
     setLoading(true);
-    api.get("/orders/mine")
+    api.get("/orders/seller/mine")
       .then((r) => {
         const data = r.data?.data?.orders || r.data?.orders || r.data?.data || r.data;
         setOrders(Array.isArray(data) ? data : []);
