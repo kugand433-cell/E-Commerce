@@ -1,0 +1,2 @@
+# This directory stores uploaded images in development mode.
+# In production, images are stored in Cloudinary.

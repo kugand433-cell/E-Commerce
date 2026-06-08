@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopNest API Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #141c2f;
+      --border-color: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #EF9F27; /* Amber CTA from UI Spec */
+      --primary-hover: #d98a12;
+      --secondary: #1a1a2e; /* Navy Primary from UI Spec */
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar Styles */
+    aside {
+      width: 280px;
+      background-color: var(--secondary);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-logo {
+      width: 32px;
+      height: 32px;
+      background-color: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .sidebar-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-menu {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .menu-group {
+      margin-bottom: 24px;
+    }
+
+    .menu-group-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .menu-item {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      color: var(--text-main);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .menu-item.active {
+      border-left: 3px solid var(--primary);
+      background-color: rgba(239, 159, 39, 0.1);
+      color: var(--primary);
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;
+      padding: 40px 60px;
+      scroll-behavior: smooth;
+    }
+
+    .content-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+    }
+
+    section {
+      margin-bottom: 60px;
+      scroll-margin-top: 40px;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Endpoint Card */
+    .endpoint-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .endpoint-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .endpoint-header {
+      padding: 16px 24px;
+      background-color: rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .method-badge {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      min-width: 75px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .method-badge.get { background-color: var(--accent-green); }
+    .method-badge.post { background-color: var(--accent-blue); }
+    .method-badge.put { background-color: var(--primary); }
+    .method-badge.delete { background-color: var(--accent-red); }
+
+    .endpoint-path {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .endpoint-auth {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .endpoint-body {
+      padding: 24px;
+    }
+
+    .endpoint-description {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Params & Code Blocks */
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      color: var(--text-main);
+      font-weight: 600;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      color: var(--text-muted);
+    }
+
+    .param-name {
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .param-type {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+
+    .code-block {
+      background-color: #070913;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+    }
+
+    /* Info Alerts */
+    .alert {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--accent-blue);
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .alert-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .alert-content {
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      body {
+        flex-direction: column;
+      }
+      aside {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .sidebar-menu {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        padding: 12px;
+      }
+      .menu-group {
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .menu-group-title {
+        margin-bottom: 0;
+        white-space: nowrap;
+      }
+      .menu-item {
+        margin-bottom: 0;
+        white-space: nowrap;
+      }
+      main {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="sidebar-header">
+      <div class="sidebar-logo">S</div>
+      <div class="sidebar-title">ShopNest API</div>
+    </div>
+    <div class="sidebar-menu">
+      <div class="menu-group">
+        <div class="menu-group-title">Introduction</div>
+        <a href="#overview" class="menu-item active">Overview</a>
+        <a href="#auth" class="menu-item">Authentication</a>
+      </div>
+      <div class="menu-group">
+        <div class="menu-group-title">Endpoints</div>
+        <a href="#products-api" class="menu-item">Products API</a>
+        <a href="#orders-api" class="menu-item">Orders API</a>
+        <a href="#reviews-api" class="menu-item">Reviews API</a>
+        <a href="#upload-api" class="menu-item">Upload API</a>
+        <a href="#admin-api" class="menu-item">Admin API</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <div class="content-container">
+      
+      <!-- Overview Section -->
+      <section id="overview">
+        <h1>ShopNest API Documentation</h1>
+        <div class="subtitle">Complete API documentation for the ShopNest Multi-Vendor E-Commerce Platform backend.</div>
+        
+        <h2>Overview</h2>
+        <p>
+          Welcome to the ShopNest backend developer documentation. This REST API powers all actions across the ShopNest e-commerce platform, supports role-based permissions (Customer, Seller, Admin), handles product search & filtering, order placement, customer product reviews, file uploads, and admin panel stats.
+        </p>
+        
+        <div class="alert">
+          <div class="alert-title">Base URL</div>
+          <div class="alert-content">All API routes listed in this documentation are prefixed with: <code style="font-family: var(--font-mono); color: var(--primary);">http://localhost:5000</code></div>
+        </div>
+
+        <div class="alert" style="background-color: rgba(16, 185, 129, 0.1); border-left-color: var(--accent-green);">
+          <div class="alert-title">Health Check</div>
+          <div class="alert-content">You can check server status anytime at: <code style="font-family: var(--font-mono); color: var(--accent-green);"><a href="/api/health" style="color: inherit; text-decoration: underline;">/api/health</a></code></div>
+        </div>
+      </section>
+
+      <!-- Authentication Section -->
+      <section id="auth">
+        <h2>Authentication & Authorization</h2>
+        <p>
+          ShopNest uses JSON Web Tokens (JWT) for authentication. To access protected routes, client applications must include the token in the HTTP Authorization header as a Bearer token:
+        </p>
+        <div class="code-block">Authorization: Bearer <your_jwt_token></div>
+
+        <!-- Register -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/auth/register</span>
+            <span class="endpoint-auth">Public</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Register a new user account as either a Customer or a Seller.</div>
+            <div class="section-title">Request Body</div>
+            <div class="code-block">{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "role": "customer" // Or "seller"
+}</div>
+            <div class="section-title">Success Response (201 Created)</div>
+            <div class="code-block">{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "60d0fe4f5311236168a109ca",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "customer"
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Login -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/auth/login</span>
+            <span class="endpoint-auth">Public</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Login with email and password to receive a JWT access token.</div>
+            <div class="section-title">Request Body</div>
+            <div class="code-block">{
+  "email": "john@example.com",
+  "password": "password123"
+}</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "60d0fe4f5311236168a109ca",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "customer"
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Get Profile -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/auth/me</span>
+            <span class="endpoint-auth">Required (All Roles)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Retrieve the current authenticated user's profile details.</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "user": {
+    "id": "60d0fe4f5311236168a109ca",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "customer",
+    "address": {
+      "street": "123 Main St",
+      "city": "Metropolis",
+      "zipCode": "12345"
+    }
+  }
+}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Products API Section -->
+      <section id="products-api">
+        <h2>Products API</h2>
+        <p>Manage store inventory, retrieve product catalogs with filters, and handle product creation.</p>
+
+        <!-- Get All Products -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/products</span>
+            <span class="endpoint-auth">Public</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Retrieve a paginated list of active products with search, category filtering, price bounds, rating filters, and sort options.</div>
+            <div class="section-title">Query Parameters</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="param-name">keyword</td>
+                  <td class="param-type">String</td>
+                  <td>Text search in title, description, and tags</td>
+                </tr>
+                <tr>
+                  <td class="param-name">category</td>
+                  <td class="param-type">String</td>
+                  <td>Category ID filter</td>
+                </tr>
+                <tr>
+                  <td class="param-name">price[gte]</td>
+                  <td class="param-type">Number</td>
+                  <td>Minimum price bounds</td>
+                </tr>
+                <tr>
+                  <td class="param-name">price[lte]</td>
+                  <td class="param-type">Number</td>
+                  <td>Maximum price bounds</td>
+                </tr>
+                <tr>
+                  <td class="param-name">rating</td>
+                  <td class="param-type">Number</td>
+                  <td>Minimum product rating (e.g. 4)</td>
+                </tr>
+                <tr>
+                  <td class="param-name">sort</td>
+                  <td class="param-type">String</td>
+                  <td>Sort field (price, -price, rating, -createdAt)</td>
+                </tr>
+                <tr>
+                  <td class="param-name">page</td>
+                  <td class="param-type">Number</td>
+                  <td>Page index (default: 1)</td>
+                </tr>
+                <tr>
+                  <td class="param-name">limit</td>
+                  <td class="param-type">Number</td>
+                  <td>Items per page (default: 12)</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "count": 1,
+  "totalPages": 1,
+  "currentPage": 1,
+  "products": [
+    {
+      "_id": "60d0fe4f5311236168a109cb",
+      "title": "Premium Wireless Headphones",
+      "price": 199.99,
+      "discountPrice": 149.99,
+      "images": ["/uploads/headphones.jpg"],
+      "rating": 4.5,
+      "numReviews": 12,
+      "stock": 45
+    }
+  ]
+}</div>
+          </div>
+        </div>
+
+        <!-- Get Single Product -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/products/:id</span>
+            <span class="endpoint-auth">Public</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Retrieve details for a single product by ID (including populated category and seller).</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "product": {
+    "_id": "60d0fe4f5311236168a109cb",
+    "title": "Premium Wireless Headphones",
+    "description": "High fidelity sound with active noise cancelling...",
+    "price": 199.99,
+    "stock": 45,
+    "images": ["/uploads/headphones.jpg"],
+    "seller": {
+      "_id": "60d0fe4f5311236168a109cc",
+      "name": "SoundStore Ltd."
+    },
+    "category": {
+      "_id": "60d0fe4f5311236168a109cd",
+      "name": "Electronics"
+    }
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Create Product -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/products</span>
+            <span class="endpoint-auth">Required (Seller/Admin)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Add a new product to the catalog.</div>
+            <div class="section-title">Request Body</div>
+            <div class="code-block">{
+  "title": "Gaming Keyboard",
+  "description": "Mechanical switches with RGB lighting",
+  "price": 89.99,
+  "stock": 100,
+  "category": "60d0fe4f5311236168a109cd",
+  "images": ["/uploads/keyboard.jpg"]
+}</div>
+            <div class="section-title">Success Response (201 Created)</div>
+            <div class="code-block">{
+  "success": true,
+  "product": {
+    "_id": "60d0fe4f5311236168a109ce",
+    "title": "Gaming Keyboard",
+    "price": 89.99,
+    "seller": "60d0fe4f5311236168a109ca"
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Update Product -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge put">PUT</span>
+            <span class="endpoint-path">/api/products/:id</span>
+            <span class="endpoint-auth">Required (Owner Seller/Admin)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Update an existing product (Sellers can only modify their own items).</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "product": {
+    "_id": "60d0fe4f5311236168a109ce",
+    "title": "Gaming Keyboard Pro",
+    "price": 99.99
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Delete Product -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge delete">DELETE</span>
+            <span class="endpoint-path">/api/products/:id</span>
+            <span class="endpoint-auth">Required (Owner Seller/Admin)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Delete a product from the database.</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "message": "Product removed successfully"
+}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Orders API Section -->
+      <section id="orders-api">
+        <h2>Orders API</h2>
+        <p>Process cart checkouts, manage customer order histories, and update status codes.</p>
+
+        <!-- Place Order -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/orders</span>
+            <span class="endpoint-auth">Required (Customer)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Place a new order. Automatically reduces product stock.</div>
+            <div class="section-title">Request Body</div>
+            <div class="code-block">{
+  "items": [
+    {
+      "product": "60d0fe4f5311236168a109cb",
+      "quantity": 2
+    }
+  ],
+  "shippingAddress": {
+    "street": "123 Main St",
+    "city": "Metropolis",
+    "zipCode": "12345",
+    "country": "USA"
+  },
+  "paymentMethod": "COD" // "COD" or "online"
+}</div>
+            <div class="section-title">Success Response (201 Created)</div>
+            <div class="code-block">{
+  "success": true,
+  "order": {
+    "_id": "60d0fe4f5311236168a109cf",
+    "buyer": "60d0fe4f5311236168a109ca",
+    "totalPrice": 299.98,
+    "status": "pending",
+    "isPaid": false
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Get My Orders -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/orders/mine</span>
+            <span class="endpoint-auth">Required (Customer)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Retrieve all orders placed by the currently logged-in customer.</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "orders": [
+    {
+      "_id": "60d0fe4f5311236168a109cf",
+      "totalPrice": 299.98,
+      "status": "pending",
+      "createdAt": "2026-06-08T09:49:05.000Z"
+    }
+  ]
+}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews API Section -->
+      <section id="reviews-api">
+        <h2>Reviews API</h2>
+        <p>Handles product reviews and ratings. Enforces a rule where a customer can only write one review per product.</p>
+
+        <!-- Add Review -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/reviews/:productId</span>
+            <span class="endpoint-auth">Required (Customer)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Add a rating and review for a specific product. Automatically updates the average rating of the product.</div>
+            <div class="section-title">Request Body</div>
+            <div class="code-block">{
+  "rating": 5,
+  "comment": "Incredible sound quality, highly recommended!"
+}</div>
+            <div class="section-title">Success Response (210 Created)</div>
+            <div class="code-block">{
+  "success": true,
+  "message": "Review added successfully",
+  "review": {
+    "_id": "60d0fe4f5311236168a109d0",
+    "product": "60d0fe4f5311236168a109cb",
+    "user": "60d0fe4f5311236168a109ca",
+    "rating": 5,
+    "comment": "Incredible sound quality..."
+  }
+}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upload API Section -->
+      <section id="upload-api">
+        <h2>Upload API</h2>
+        <p>Supports media asset upload capabilities for product images and profiles.</p>
+
+        <!-- Upload Image -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge post">POST</span>
+            <span class="endpoint-path">/api/upload</span>
+            <span class="endpoint-auth">Required (Seller/Admin)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Upload an image file. Configured for Cloudinary storage if environment variables are set; falls back to local disk storage.</div>
+            <div class="section-title">Request Payload</div>
+            <p>Form-data field <code style="font-family: var(--font-mono); color: var(--primary);">image</code> containing the binary image file.</p>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "imageUrl": "https://res.cloudinary.com/demo/image/upload/v1234/shopnest/keyboard.jpg"
+}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Admin API Section -->
+      <section id="admin-api">
+        <h2>Admin API</h2>
+        <p>System-wide administrative endpoints restricted to users with the role "admin".</p>
+
+        <!-- Get Stats -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/admin/stats</span>
+            <span class="endpoint-auth">Required (Admin Only)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">Retrieve key platform metrics including user accounts, products, order tallies, and revenue totals.</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "stats": {
+    "usersCount": 120,
+    "sellersCount": 14,
+    "productsCount": 354,
+    "ordersCount": 84,
+    "totalRevenue": 14320.50
+  }
+}</div>
+          </div>
+        </div>
+
+        <!-- Get All Users -->
+        <div class="endpoint-card">
+          <div class="endpoint-header">
+            <span class="method-badge get">GET</span>
+            <span class="endpoint-path">/api/admin/users</span>
+            <span class="endpoint-auth">Required (Admin Only)</span>
+          </div>
+          <div class="endpoint-body">
+            <div class="endpoint-description">List all registered users on the platform.</div>
+            <div class="section-title">Success Response (200 OK)</div>
+            <div class="code-block">{
+  "success": true,
+  "users": [
+    {
+      "_id": "60d0fe4f5311236168a109ca",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "customer",
+      "isActive": true
+    }
+  ]
+}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  // Simple sidebar tracking highlights
+  const sections = document.querySelectorAll('section');
+  const navItems = document.querySelectorAll('.menu-item');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= (sectionTop - 150)) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('href').slice(1) === current) {
+        item.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>

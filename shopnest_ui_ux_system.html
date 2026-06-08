@@ -1,0 +1,310 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.section{margin-bottom:2.5rem}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:12px;padding-bottom:6px;border-bottom:.5px solid var(--color-border-tertiary)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+.metric .label{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
+.metric .value{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.metric .sub{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:99px}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:8px 16px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-primary);cursor:pointer}
+.btn-primary{background:#1a1a2e;color:#fff;border-color:transparent}
+.btn-amber{background:#EF9F27;color:#412402;border-color:transparent}
+.swatch{height:32px;border-radius:var(--border-radius-md);margin-bottom:4px}
+.swatch-label{font-size:11px;color:var(--color-text-secondary)}
+.nav{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 20px;display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.nav-logo{font-size:16px;font-weight:500;color:var(--color-text-primary);margin-right:auto}
+.nav-icon{font-size:20px;color:var(--color-text-secondary);position:relative;cursor:pointer}
+.nav-badge{position:absolute;top:-4px;right:-6px;width:16px;height:16px;border-radius:50%;background:#EF9F27;color:#412402;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.search-box{flex:1;max-width:280px;display:flex;align-items:center;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 10px;gap:6px}
+.search-box input{background:transparent;border:none;outline:none;font-size:13px;color:var(--color-text-primary);width:100%}
+.pcard{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.pcard-img{height:120px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center}
+.pcard-body{padding:10px 12px}
+.pcard-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard-brand{font-size:11px;color:var(--color-text-tertiary);margin-bottom:6px}
+.pcard-price{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.pcard-mrp{font-size:11px;color:var(--color-text-tertiary);text-decoration:line-through;margin-left:4px}
+.pcard-off{font-size:11px;color:#3B6D11;font-weight:500;margin-left:4px}
+.stars{color:#EF9F27;font-size:12px;letter-spacing:1px}
+.sidebar{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px}
+.sidebar-section{margin-bottom:16px}
+.sidebar-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:5px 0;font-size:12px;color:var(--color-text-secondary);cursor:pointer}
+.sidebar-item:hover{color:var(--color-text-primary)}
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:13px}
+.status-row:last-child{border-bottom:none}
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500}
+.tab{display:flex;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden}
+.tab-item{padding:7px 16px;font-size:12px;font-weight:500;cursor:pointer;color:var(--color-text-secondary);border-right:.5px solid var(--color-border-tertiary)}
+.tab-item:last-child{border-right:none}
+.tab-item.active{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.form-row{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.form-row label{font-size:12px;color:var(--color-text-secondary);font-weight:500}
+.form-row input,.form-row select{border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 10px;font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary);outline:none;width:100%}
+</style>
+
+<h2 class="sr-only">ShopNest UI/UX design system — colors, components, layouts for all three roles</h2>
+
+<div class="section">
+  <div class="section-label">Color palette — ShopNest brand</div>
+  <div class="grid4" style="grid-template-columns:repeat(6,1fr);gap:8px">
+    <div><div class="swatch" style="background:#1a1a2e"></div><div class="swatch-label">Navy primary</div></div>
+    <div><div class="swatch" style="background:#EF9F27"></div><div class="swatch-label">Amber CTA</div></div>
+    <div><div class="swatch" style="background:#E6F1FB"></div><div class="swatch-label">Info fill</div></div>
+    <div><div class="swatch" style="background:#EAF3DE"></div><div class="swatch-label">Success fill</div></div>
+    <div><div class="swatch" style="background:#FCEBEB"></div><div class="swatch-label">Danger fill</div></div>
+    <div><div class="swatch" style="background:var(--color-background-secondary)"></div><div class="swatch-label">Surface</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Navbar — all roles</div>
+  <div class="nav">
+    <span class="nav-logo"><i class="ti ti-shopping-bag" style="color:#EF9F27;font-size:18px;margin-right:4px" aria-hidden="true"></i>ShopNest</span>
+    <div class="search-box">
+      <i class="ti ti-search" style="color:var(--color-text-tertiary);font-size:16px" aria-hidden="true"></i>
+      <input type="text" placeholder="Search products, brands…" readonly>
+    </div>
+    <i class="ti ti-heart nav-icon" aria-label="Wishlist" style="font-size:20px;color:var(--color-text-secondary)"></i>
+    <div class="nav-icon" style="position:relative">
+      <i class="ti ti-shopping-cart" style="font-size:20px;color:var(--color-text-secondary)" aria-label="Cart"></i>
+      <div class="nav-badge">3</div>
+    </div>
+    <div class="avatar" style="background:#E6F1FB;color:#0C447C">JD</div>
+    <i class="ti ti-chevron-down" style="font-size:14px;color:var(--color-text-tertiary)" aria-hidden="true"></i>
+  </div>
+  <div style="display:flex;gap:16px;padding:0 4px;margin-top:4px">
+    <span style="font-size:12px;color:var(--color-text-secondary);cursor:pointer">Electronics</span>
+    <span style="font-size:12px;color:var(--color-text-secondary);cursor:pointer">Fashion</span>
+    <span style="font-size:12px;color:var(--color-text-secondary);cursor:pointer">Home & Kitchen</span>
+    <span style="font-size:12px;color:var(--color-text-secondary);cursor:pointer">Sports</span>
+    <span style="font-size:12px;color:var(--color-text-secondary);cursor:pointer">Books</span>
+    <span style="font-size:12px;color:var(--color-text-secondary);cursor:pointer">Deals</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Status badges</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <span class="badge" style="background:#E6F1FB;color:#0C447C"><i class="ti ti-clock" style="font-size:12px"></i>Pending</span>
+    <span class="badge" style="background:#EAF3DE;color:#27500A"><i class="ti ti-check" style="font-size:12px"></i>Confirmed</span>
+    <span class="badge" style="background:#FAEEDA;color:#633806"><i class="ti ti-truck" style="font-size:12px"></i>Shipped</span>
+    <span class="badge" style="background:#EAF3DE;color:#3B6D11"><i class="ti ti-circle-check" style="font-size:12px"></i>Delivered</span>
+    <span class="badge" style="background:#FCEBEB;color:#791F1F"><i class="ti ti-x" style="font-size:12px"></i>Cancelled</span>
+    <span class="badge" style="background:#EEEDFE;color:#3C3489">Admin</span>
+    <span class="badge" style="background:#E1F5EE;color:#085041">Seller</span>
+    <span class="badge" style="background:#F1EFE8;color:#444441">Customer</span>
+    <span class="badge" style="background:#FAEEDA;color:#633806">20% off</span>
+    <span class="badge" style="background:#EAF3DE;color:#27500A">In stock</span>
+    <span class="badge" style="background:#FCEBEB;color:#791F1F">Out of stock</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Buttons</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <button class="btn btn-primary"><i class="ti ti-shopping-cart" style="font-size:15px" aria-hidden="true"></i>Add to cart</button>
+    <button class="btn btn-amber"><i class="ti ti-bolt" style="font-size:15px" aria-hidden="true"></i>Buy now</button>
+    <button class="btn"><i class="ti ti-plus" style="font-size:15px" aria-hidden="true"></i>Add product</button>
+    <button class="btn"><i class="ti ti-edit" style="font-size:15px" aria-hidden="true"></i>Edit</button>
+    <button class="btn" style="border-color:var(--color-border-danger);color:var(--color-text-danger)"><i class="ti ti-trash" style="font-size:15px" aria-hidden="true"></i>Delete</button>
+    <button class="btn" onclick="sendPrompt('Show me the product card component code in React + Tailwind')">View code ↗</button>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Product cards — customer store</div>
+  <div class="grid4" style="grid-template-columns:repeat(3,1fr)">
+    <div class="pcard">
+      <div class="pcard-img"><i class="ti ti-device-laptop" style="font-size:36px;color:var(--color-text-tertiary)" aria-hidden="true"></i></div>
+      <div class="pcard-body">
+        <div class="pcard-title">Apple MacBook Air M2</div>
+        <div class="pcard-brand">Apple</div>
+        <div style="display:flex;align-items:center;margin-bottom:6px">
+          <span class="stars">★★★★★</span>
+          <span style="font-size:11px;color:var(--color-text-tertiary);margin-left:4px">(1.2k)</span>
+        </div>
+        <div style="display:flex;align-items:baseline;flex-wrap:wrap">
+          <span class="pcard-price">₹89,990</span>
+          <span class="pcard-mrp">₹1,14,990</span>
+          <span class="pcard-off">22% off</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:10px;justify-content:center;font-size:12px;padding:7px">Add to cart</button>
+      </div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-img"><i class="ti ti-shirt" style="font-size:36px;color:var(--color-text-tertiary)" aria-hidden="true"></i></div>
+      <div class="pcard-body">
+        <div class="pcard-title">Blue Denim Jacket</div>
+        <div class="pcard-brand">Levi's</div>
+        <div style="display:flex;align-items:center;margin-bottom:6px">
+          <span class="stars">★★★★</span><span style="color:var(--color-text-tertiary);font-size:12px">☆</span>
+          <span style="font-size:11px;color:var(--color-text-tertiary);margin-left:4px">(348)</span>
+        </div>
+        <div style="display:flex;align-items:baseline;flex-wrap:wrap">
+          <span class="pcard-price">₹1,599</span>
+          <span class="pcard-mrp">₹1,999</span>
+          <span class="pcard-off">20% off</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:10px;justify-content:center;font-size:12px;padding:7px">Add to cart</button>
+      </div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-img" style="position:relative"><i class="ti ti-headphones" style="font-size:36px;color:var(--color-text-tertiary)" aria-hidden="true"></i><span class="badge" style="position:absolute;top:8px;left:8px;background:#FCEBEB;color:#791F1F;font-size:10px">Low stock</span></div>
+      <div class="pcard-body">
+        <div class="pcard-title">Sony WH-1000XM5</div>
+        <div class="pcard-brand">Sony</div>
+        <div style="display:flex;align-items:center;margin-bottom:6px">
+          <span class="stars">★★★★★</span>
+          <span style="font-size:11px;color:var(--color-text-tertiary);margin-left:4px">(2.8k)</span>
+        </div>
+        <div style="display:flex;align-items:baseline;flex-wrap:wrap">
+          <span class="pcard-price">₹24,990</span>
+          <span class="pcard-mrp">₹34,990</span>
+          <span class="pcard-off">29% off</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:10px;justify-content:center;font-size:12px;padding:7px">Add to cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Product listing layout — filters + grid</div>
+  <div style="display:grid;grid-template-columns:180px 1fr;gap:16px">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Category</div>
+        <div class="sidebar-item"><span>Electronics</span><span style="font-size:11px;background:var(--color-background-secondary);padding:1px 6px;border-radius:99px">124</span></div>
+        <div class="sidebar-item"><span>Fashion</span><span style="font-size:11px;background:var(--color-background-secondary);padding:1px 6px;border-radius:99px">87</span></div>
+        <div class="sidebar-item"><span>Home & Kitchen</span><span style="font-size:11px;background:var(--color-background-secondary);padding:1px 6px;border-radius:99px">56</span></div>
+        <div class="sidebar-item"><span>Sports</span><span style="font-size:11px;background:var(--color-background-secondary);padding:1px 6px;border-radius:99px">42</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Price range</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">₹0 — ₹50,000</div>
+        <input type="range" min="0" max="50000" value="25000" style="width:100%">
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Min rating</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div class="sidebar-item"><span class="stars" style="font-size:13px">★★★★★</span><span style="font-size:11px;color:var(--color-text-tertiary)">& up</span></div>
+          <div class="sidebar-item"><span class="stars" style="font-size:13px">★★★★</span><span style="font-size:11px;color:var(--color-text-tertiary)">& up</span></div>
+          <div class="sidebar-item"><span class="stars" style="font-size:13px">★★★</span><span style="font-size:11px;color:var(--color-text-tertiary)">& up</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <span style="font-size:13px;color:var(--color-text-secondary)">Showing 124 results</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span style="font-size:12px;color:var(--color-text-secondary)">Sort:</span>
+          <select style="font-size:12px;padding:5px 8px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)">
+            <option>Relevance</option>
+            <option>Price: low to high</option>
+            <option>Price: high to low</option>
+            <option>Newest</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="pcard" style="display:flex;gap:10px;padding:10px;border-radius:var(--border-radius-md)">
+          <div style="width:60px;height:60px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-device-watch" style="font-size:24px;color:var(--color-text-tertiary)" aria-hidden="true"></i></div>
+          <div style="min-width:0">
+            <div class="pcard-title">Apple Watch S9</div>
+            <div class="stars" style="font-size:11px">★★★★★</div>
+            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-top:2px">₹41,900</div>
+          </div>
+        </div>
+        <div class="pcard" style="display:flex;gap:10px;padding:10px;border-radius:var(--border-radius-md)">
+          <div style="width:60px;height:60px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-camera" style="font-size:24px;color:var(--color-text-tertiary)" aria-hidden="true"></i></div>
+          <div style="min-width:0">
+            <div class="pcard-title">Canon DSLR 200D</div>
+            <div class="stars" style="font-size:11px">★★★★</div>
+            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-top:2px">₹34,995</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Admin dashboard — stats + order table</div>
+  <div class="grid4" style="margin-bottom:14px">
+    <div class="metric"><div class="label"><i class="ti ti-users" style="font-size:13px;margin-right:3px" aria-hidden="true"></i>Total users</div><div class="value">4,821</div><div class="sub">+12 today</div></div>
+    <div class="metric"><div class="label"><i class="ti ti-box" style="font-size:13px;margin-right:3px" aria-hidden="true"></i>Products</div><div class="value">1,204</div><div class="sub">38 sellers</div></div>
+    <div class="metric"><div class="label"><i class="ti ti-shopping-bag" style="font-size:13px;margin-right:3px" aria-hidden="true"></i>Orders</div><div class="value">892</div><div class="sub">23 pending</div></div>
+    <div class="metric"><div class="label"><i class="ti ti-currency-rupee" style="font-size:13px;margin-right:3px" aria-hidden="true"></i>Revenue</div><div class="value">₹8.4L</div><div class="sub">this month</div></div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:12px 16px;border-bottom:.5px solid var(--color-border-tertiary);font-size:13px;font-weight:500;color:var(--color-text-primary)">Recent orders</div>
+    <div class="status-row" style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:#E6F1FB;color:#0C447C;font-size:10px">RK</div><div><div style="font-size:12px;font-weight:500">Rahul Kumar</div><div style="font-size:11px;color:var(--color-text-tertiary)">#ORD-1042</div></div></div><span style="font-size:12px;font-weight:500">₹4,299</span><span class="badge" style="background:#FAEEDA;color:#633806"><i class="ti ti-truck" style="font-size:11px"></i>Shipped</span></div>
+    <div class="status-row" style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:#E1F5EE;color:#085041;font-size:10px">PS</div><div><div style="font-size:12px;font-weight:500">Priya Sharma</div><div style="font-size:11px;color:var(--color-text-tertiary)">#ORD-1041</div></div></div><span style="font-size:12px;font-weight:500">₹12,490</span><span class="badge" style="background:#EAF3DE;color:#27500A"><i class="ti ti-check" style="font-size:11px"></i>Confirmed</span></div>
+    <div class="status-row" style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:#EEEDFE;color:#3C3489;font-size:10px">AN</div><div><div style="font-size:12px;font-weight:500">Amit Nair</div><div style="font-size:11px;color:var(--color-text-tertiary)">#ORD-1040</div></div></div><span style="font-size:12px;font-weight:500">₹899</span><span class="badge" style="background:#E6F1FB;color:#0C447C"><i class="ti ti-clock" style="font-size:11px"></i>Pending</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Seller dashboard — product form</div>
+  <div class="grid2">
+    <div class="card">
+      <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:14px">Add new product</div>
+      <div class="form-row"><label>Product title</label><input type="text" placeholder="e.g. Blue Denim Jacket" readonly></div>
+      <div class="form-row"><label>Category</label><select><option>Fashion</option><option>Electronics</option></select></div>
+      <div class="grid2" style="gap:10px">
+        <div class="form-row"><label>Price (₹)</label><input type="text" placeholder="1999" readonly></div>
+        <div class="form-row"><label>Discount price</label><input type="text" placeholder="1599" readonly></div>
+      </div>
+      <div class="form-row"><label>Stock quantity</label><input type="text" placeholder="50" readonly></div>
+      <div style="border:.5px dashed var(--color-border-secondary);border-radius:var(--border-radius-md);padding:20px;text-align:center;color:var(--color-text-tertiary);font-size:12px;margin-bottom:12px"><i class="ti ti-upload" style="font-size:22px;display:block;margin-bottom:4px" aria-hidden="true"></i>Click to upload images (max 5)</div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center"><i class="ti ti-plus" style="font-size:15px" aria-hidden="true"></i>Publish product</button>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div style="font-size:14px;font-weight:500;margin-bottom:12px">Seller stats</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="metric" style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px"><span style="font-size:12px;color:var(--color-text-secondary)">My products</span><span style="font-size:16px;font-weight:500">24</span></div>
+          <div class="metric" style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px"><span style="font-size:12px;color:var(--color-text-secondary)">Orders received</span><span style="font-size:16px;font-weight:500">139</span></div>
+          <div class="metric" style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px"><span style="font-size:12px;color:var(--color-text-secondary)">Revenue</span><span style="font-size:16px;font-weight:500">₹2.1L</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:500;margin-bottom:12px">Recent orders</div>
+        <div class="status-row"><span style="font-size:12px">Sony WH-1000XM5</span><span class="badge" style="background:#FAEEDA;color:#633806">Shipped</span></div>
+        <div class="status-row"><span style="font-size:12px">Blue Denim Jacket</span><span class="badge" style="background:#E6F1FB;color:#0C447C">Pending</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Tabs — used on product detail, my orders, admin pages</div>
+  <div class="tab" style="margin-bottom:14px">
+    <div class="tab-item active">Overview</div>
+    <div class="tab-item">Specifications</div>
+    <div class="tab-item">Reviews (48)</div>
+    <div class="tab-item">Seller info</div>
+  </div>
+  <div class="tab">
+    <div class="tab-item active">All orders</div>
+    <div class="tab-item">Pending</div>
+    <div class="tab-item">Shipped</div>
+    <div class="tab-item">Delivered</div>
+    <div class="tab-item">Cancelled</div>
+  </div>
+</div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:8px">
+  <button class="btn" onclick="sendPrompt('Give me the Tailwind CSS classes and React code for the ProductCard component')">ProductCard code ↗</button>
+  <button class="btn" onclick="sendPrompt('Give me the Tailwind CSS and React code for the Admin dashboard stats cards')">Admin dashboard code ↗</button>
+  <button class="btn" onclick="sendPrompt('Give me the React code for the Seller add product form with image upload')">Seller form code ↗</button>
+  <button class="btn" onclick="sendPrompt('Give me the React code for the filter sidebar on the product listing page')">Filter sidebar code ↗</button>
+</div>
