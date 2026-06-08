@@ -55,18 +55,23 @@ function OrdersPage() {
                   <span style={{ fontSize: '1.125rem', fontWeight: 700 }}>₹{o.totalPrice.toLocaleString()}</span>
                 </div>
               </div>
-              <div style={{ marginTop: '0.75rem', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                {o.items.slice(0, 4).map((it, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <div style={{ width: '3.5rem', height: '3.5rem', overflow: 'hidden', borderRadius: '4px', backgroundColor: 'var(--muted)' }}>
-                      {it.image && <img src={it.image} alt={it.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+              <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', flex: 1 }}>
+                  {o.items.slice(0, 4).map((it, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div style={{ width: '3.5rem', height: '3.5rem', overflow: 'hidden', borderRadius: '4px', backgroundColor: 'var(--muted)' }}>
+                        {it.image && <img src={it.image} alt={it.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                      </div>
+                      <div style={{ fontSize: '0.875rem' }}>
+                        <p style={{ maxWidth: '180px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{it.title}</p>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Qty: {it.quantity}</p>
+                      </div>
                     </div>
-                    <div style={{ fontSize: '0.875rem' }}>
-                      <p style={{ maxWidth: '180px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{it.title}</p>
-                      <p style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Qty: {it.quantity}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <Link to={`/orders/${o._id}`} className="btn-orange" style={{ padding: '0.5rem 1rem', borderRadius: '8px', fontSize: '0.75rem' }}>
+                  Track Package
+                </Link>
               </div>
             </div>
           ))}

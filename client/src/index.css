@@ -886,3 +886,84 @@ input, select, textarea { font: inherit; }
   font-size: 0.875rem;
   color: var(--muted-foreground);
 }
+
+/* ===== Tracker Timeline ===== */
+.tracker-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tracker-line-bg, .tracker-line-fill {
+  position: absolute;
+  background-color: var(--muted);
+  z-index: 0;
+}
+
+.tracker-line-bg {
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  width: 4px;
+}
+
+.tracker-line-fill {
+  top: 20px;
+  left: 20px;
+  width: 4px;
+  background-color: var(--success);
+  transition: height 0.5s ease;
+}
+
+.tracker-step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.tracker-step-labels {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .tracker-container {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
+  
+  .tracker-line-bg {
+    top: 20px;
+    left: 12.5%;
+    right: 12.5%;
+    bottom: auto;
+    height: 4px;
+    width: auto;
+  }
+  
+  .tracker-line-fill {
+    top: 20px;
+    left: 12.5%;
+    bottom: auto;
+    height: 4px;
+    background-color: var(--success);
+    transition: width 0.5s ease;
+  }
+  
+  .tracker-step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .tracker-step-labels {
+    align-items: center;
+  }
+}
+
