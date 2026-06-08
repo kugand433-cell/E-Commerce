@@ -16,7 +16,25 @@ exports.getProducts = async (req, res, next) => {
 
     // Category filter
     if (category) {
-      filter.category = category;
+      // If category is a valid ObjectId, use it directly
+      if (category.match(/^[0-9a-fA-F]{24}$/)) {
+        filter.category = category;
+      } else {
+        // Otherwise, look up the Category by name or slug
+        const Category = require('../models/Category');
+        const cat = await Category.findOne({ 
+          $or: [
+            { slug: category.toLowerCase() },
+            { name: new RegExp('^' + category + '$', 'i') }
+          ]
+        });
+        if (cat) {
+          filter.category = cat._id;
+        } else {
+          // Force no match if category name is not found
+          filter.category = null;
+        }
+      }
     }
 
     // Price range filter
