@@ -1,0 +1,119 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-nest-navy: var(--nest-navy);
+  --color-nest-navy-light: var(--nest-navy-light);
+  --color-nest-orange: var(--nest-orange);
+  --color-nest-orange-hover: var(--nest-orange-hover);
+  --color-nest-yellow: var(--nest-yellow);
+  --color-nest-cream: var(--nest-cream);
+  --color-nest-link: var(--nest-link);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --font-display: "Poppins", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.985 0.005 90);
+  --foreground: oklch(0.18 0.02 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.02 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 250);
+  --primary: oklch(0.22 0.04 250);
+  --primary-foreground: oklch(0.985 0.005 90);
+  --secondary: oklch(0.96 0.01 90);
+  --secondary-foreground: oklch(0.22 0.04 250);
+  --muted: oklch(0.95 0.008 90);
+  --muted-foreground: oklch(0.48 0.02 250);
+  --accent: oklch(0.78 0.18 65);
+  --accent-foreground: oklch(0.18 0.02 250);
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0.01 90);
+  --input: oklch(0.92 0.008 90);
+  --ring: oklch(0.78 0.18 65);
+
+  /* Brand tokens */
+  --nest-navy: oklch(0.22 0.035 250);        /* #131921 vibe */
+  --nest-navy-light: oklch(0.3 0.04 250);    /* #232f3e */
+  --nest-orange: oklch(0.78 0.18 65);        /* #ff9900 */
+  --nest-orange-hover: oklch(0.72 0.19 55);
+  --nest-yellow: oklch(0.86 0.17 90);        /* #febd69 */
+  --nest-cream: oklch(0.97 0.008 90);
+  --nest-link: oklch(0.5 0.12 230);
+
+  --success: oklch(0.68 0.16 150);
+  --warning: oklch(0.82 0.16 80);
+  --info: oklch(0.65 0.14 230);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility btn-orange {
+  background: linear-gradient(180deg, var(--nest-yellow), var(--nest-orange));
+  color: var(--nest-navy);
+  font-weight: 600;
+  border: 1px solid color-mix(in oklab, var(--nest-orange) 70%, black 10%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 1px 2px rgba(0,0,0,.08);
+  transition: filter .15s ease, transform .05s ease;
+  &:hover { filter: brightness(0.97); }
+  &:active { transform: translateY(1px); }
+}
+
+@utility card-hover {
+  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+  &:hover {
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,.15);
+    border-color: color-mix(in oklab, var(--nest-orange) 60%, transparent);
+  }
+}
+
+@utility link-nest {
+  color: var(--nest-link);
+  &:hover { color: var(--nest-orange); text-decoration: underline; }
+}

@@ -14,6 +14,14 @@ connectDB();
 
 const app = express();
 
+// CORS (Must be first for preflight requests)
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? process.env.CLIENT_URL || true
+    : ['http://localhost:8080', 'http://localhost:5173', 'https://lorna-featureless-anastasia.ngrok-free.dev'],
+  credentials: true,
+}));
+
 // Security middleware
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
@@ -26,14 +34,6 @@ const limiter = rateLimit({
   message: { success: false, message: 'Too many requests, please try again later.' },
 });
 app.use('/api/', limiter);
-
-// CORS
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? process.env.CLIENT_URL || true
-    : 'http://localhost:5173',
-  credentials: true,
-}));
 
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
@@ -50,8 +50,9 @@ app.use('/api/auth',     require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders',   require('./routes/orderRoutes'));
 app.use('/api/reviews',  require('./routes/reviewRoutes'));
-app.use('/api/upload',   require('./routes/uploadRoutes'));
 app.use('/api/admin',    require('./routes/adminRoutes'));
+app.use('/api/upload',   require('./routes/uploadRoutes'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
 
 // Documentation root route
 app.get('/', (req, res) => {
