@@ -825,25 +825,25 @@ if (process.env.NODE_ENV === 'production') {
 ## 16. Development Roadmap
 
 ### Phase 1 — Core (Week 1–2)
-- [ ] Project setup (MERN boilerplate)
-- [ ] MongoDB schemas: User, Product, Order, Review, Category
-- [ ] Auth API: register, login, JWT middleware
-- [ ] Product API: CRUD + text search
-- [ ] Basic React pages: Login, Register, Home, Product listing, Product detail
+- [x] Project setup (MERN boilerplate)
+- [x] MongoDB schemas: User, Product, Order, Review, Category
+- [x] Auth API: register, login, JWT middleware
+- [x] Product API: CRUD + text search
+- [x] Basic React pages: Login, Register, Home, Product listing, Product detail
 
 ### Phase 2 — Seller & Cart (Week 3)
-- [ ] Seller portal: dashboard, add/edit/delete product
-- [ ] Image upload: Multer + Cloudinary
-- [ ] Cart (Context API): add, remove, quantity
-- [ ] Checkout + Order placement API
-- [ ] Customer: My Orders page
+- [x] Seller portal: dashboard, add/edit/delete product
+- [x] Image upload: Multer + Cloudinary
+- [x] Cart (Context API): add, remove, quantity
+- [x] Checkout + Order placement API
+- [x] Customer: My Orders page
 
 ### Phase 3 — Admin & Polish (Week 4)
-- [ ] Admin dashboard: stats API + UI
-- [ ] Admin: manage users, all products, all orders
-- [ ] Reviews: add, list, average rating update
-- [ ] Filters + sort + pagination on product listing
-- [ ] Responsive UI (mobile-friendly with Tailwind)
+- [x] Admin dashboard: stats API + UI
+- [x] Admin: manage users, all products, all orders
+- [x] Reviews: add, list, average rating update
+- [x] Filters + sort + pagination on product listing
+- [x] Responsive UI (mobile-friendly with Tailwind)
 
 ### Optional Enhancements
 - [ ] Razorpay / Stripe payment integration
