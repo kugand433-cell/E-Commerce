@@ -6,7 +6,7 @@ import StarRating from "@/components/StarRating";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import { ShoppingCart, Zap, ShieldCheck, Truck } from "lucide-react";
+import { ShoppingCart, Zap, ShieldCheck, Truck, Star } from "lucide-react";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -18,6 +18,7 @@ export default function ProductDetail() {
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true);
   const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
+  const [hoverRating, setHoverRating] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -162,11 +163,46 @@ export default function ProductDetail() {
         <div className="grid-review-layout" style={{ marginTop: '1rem' }}>
           <form onSubmit={submitReview} style={{ borderRadius: '12px', border: '1px solid var(--border)', backgroundColor: 'var(--card)', padding: '1rem' }}>
             <h3 style={{ fontWeight: 600 }}>Write a review</h3>
-            <div style={{ marginTop: '0.75rem' }}>
-              <label style={{ fontSize: '0.875rem' }}>Rating</label>
-              <select value={newReview.rating} onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })} style={{ ...inputStyle, marginTop: '0.25rem' }}>
-                {[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{n} Stars</option>)}
-              </select>
+             <div style={{ marginTop: '0.75rem' }}>
+              <label style={{ fontSize: '0.875rem', fontWeight: 500, display: 'block', marginBottom: '0.5rem' }}>Rating</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', gap: '0.25rem' }} onMouseLeave={() => setHoverRating(0)}>
+                  {[1, 2, 3, 4, 5].map((num) => {
+                    const isFilled = hoverRating > 0 ? num <= hoverRating : num <= newReview.rating;
+                    const ratingLabels = { 5: "Excellent", 4: "Good", 3: "Average", 2: "Below Average", 1: "Poor" };
+                    return (
+                      <button
+                        key={num}
+                        type="button"
+                        onClick={() => setNewReview({ ...newReview, rating: num })}
+                        onMouseEnter={() => setHoverRating(num)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          padding: 0,
+                          cursor: 'pointer',
+                          outline: 'none',
+                        }}
+                      >
+                        <Star
+                          style={{
+                            width: 28,
+                            height: 28,
+                            color: isFilled ? 'var(--nest-orange)' : 'rgba(107,107,123,0.4)',
+                            fill: isFilled ? 'var(--nest-orange)' : 'none',
+                            transition: 'color 0.15s ease, fill 0.15s ease',
+                          }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+                <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--nest-orange)' }}>
+                  {hoverRating > 0
+                    ? `${hoverRating} Stars (${{ 5: "Excellent", 4: "Good", 3: "Average", 2: "Below Average", 1: "Poor" }[hoverRating]})`
+                    : `${newReview.rating} Stars (${{ 5: "Excellent", 4: "Good", 3: "Average", 2: "Below Average", 1: "Poor" }[newReview.rating]})`}
+                </span>
+              </div>
             </div>
             <div style={{ marginTop: '0.75rem' }}>
               <label style={{ fontSize: '0.875rem' }}>Comment</label>
