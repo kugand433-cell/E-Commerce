@@ -15,7 +15,11 @@ const productSchema = new mongoose.Schema({
   rating:        { type: Number, default: 0 },
   numReviews:    { type: Number, default: 0 },
   isActive:      { type: Boolean, default: true },
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  toJSON: { getters: true },
+  toObject: { getters: true },
+});
 
 // Text index for search
 productSchema.index({ title: 'text', description: 'text', brand: 'text', tags: 'text' });

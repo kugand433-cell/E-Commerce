@@ -35,9 +35,16 @@ function AllProducts() {
   useEffect(load, []);
 
   const remove = async (id) => {
-    if (!confirm("Delete this product?")) return;
-    try { await api.delete(`/products/${id}`); toast.success("Deleted"); load(); }
-    catch (err) { toast.error(err?.response?.data?.message || "Failed"); }
+    toast("Delete this product?", {
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try { await api.delete(`/products/${id}`); toast.success("Deleted"); load(); }
+          catch (err) { toast.error(err?.response?.data?.message || "Failed"); }
+        },
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    });
   };
 
   return (

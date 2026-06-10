@@ -39,9 +39,16 @@ function AllUsers() {
     catch (err) { toast.error(err?.response?.data?.message || "Failed"); }
   };
   const remove = async (id) => {
-    if (!confirm("Delete this user?")) return;
-    try { await api.delete(`/admin/users/${id}`); toast.success("User deleted"); load(); }
-    catch (err) { toast.error(err?.response?.data?.message || "Failed"); }
+    toast("Delete this user?", {
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try { await api.delete(`/admin/users/${id}`); toast.success("User deleted"); load(); }
+          catch (err) { toast.error(err?.response?.data?.message || "Failed"); }
+        },
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    });
   };
 
   return (

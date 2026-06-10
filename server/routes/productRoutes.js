@@ -13,10 +13,11 @@ const roleGuard = require('../middleware/roleGuard');
 
 // Public routes
 router.get('/', getProducts);
-router.get('/:id', getProductById);
 
-// Seller routes (must be before /:id to avoid conflict)
+// Seller routes — static paths MUST be registered before dynamic /:id
 router.get('/seller/mine', verifyToken, roleGuard('seller'), getMyProducts);
+
+router.get('/:id', getProductById);
 
 // Seller / Admin routes
 router.post('/', verifyToken, roleGuard('seller', 'admin'), createProduct);

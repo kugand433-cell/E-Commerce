@@ -37,7 +37,9 @@ function EditProductPage() {
           category: typeof p.category === "string" ? p.category : p.category?._id || "",
           brand: p.brand || "",
           tags: p.tags || [],
-          specs: p.specs && typeof p.specs === "object" ? p.specs : {},
+          specs: p.specs ? Object.fromEntries(
+            p.specs instanceof Map ? p.specs : Object.entries(p.specs)
+          ) : {},
           images: p.images || [],
         });
       })

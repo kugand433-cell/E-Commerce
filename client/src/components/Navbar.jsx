@@ -66,7 +66,7 @@ export default function Navbar() {
         {/* Right */}
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {isAuthenticated ? (
-            <div className="group" style={{ position: 'relative', display: 'none' }}>
+            <div className="group" style={{ position: 'relative' }}>
               <button style={{ padding: '0.25rem 0.5rem', textAlign: 'left', borderRadius: '4px', background: 'none', border: '1px solid transparent', color: '#fff' }}>
                 <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)' }}>Hello, {user?.name?.split(" ")[0]}</div>
                 <div style={{ fontSize: '0.875rem', fontWeight: 600, textTransform: 'capitalize' }}>{user?.role} ▾</div>

@@ -24,7 +24,14 @@ export function AuthProvider({ children }) {
             localStorage.setItem("user", JSON.stringify(fresh));
           }
         })
-        .catch(() => {})
+        .catch((err) => {
+          if (err?.response?.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            setToken(null);
+            setUser(null);
+          }
+        })
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
